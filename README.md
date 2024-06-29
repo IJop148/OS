@@ -6,7 +6,7 @@ If you want to try it yourself, I recommend reading this guide: [OSDev explation
 
 This is not my school or any other project, this is just a hobby project.
 
-Current time spent: 
+Current hours wasted: 
 
 [![wakatime Time Meter](https://wakatime.com/badge/user/e433b428-d6a0-41d0-b5bc-69037319d82f/project/8962cc17-3656-48e9-9161-2137d54e7377.svg)](https://wakatime.com/badge/user/e433b428-d6a0-41d0-b5bc-69037319d82f/project/8962cc17-3656-48e9-9161-2137d54e7377)
 

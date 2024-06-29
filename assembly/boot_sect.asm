@@ -52,7 +52,7 @@ BEGIN_PM:
     ; Call the kernel code in protected mode
     call KERNEL_OFFSET
 
-    ; Infinite loop
+    ; make a jump to the kernal code
     jmp $
 
 ; Define the boot drive variable

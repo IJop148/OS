@@ -10,4 +10,8 @@ Current hours wasted:
 
 [![wakatime Time Meter](https://wakatime.com/badge/user/e433b428-d6a0-41d0-b5bc-69037319d82f/project/8962cc17-3656-48e9-9161-2137d54e7377.svg)](https://wakatime.com/badge/user/e433b428-d6a0-41d0-b5bc-69037319d82f/project/8962cc17-3656-48e9-9161-2137d54e7377)
 
+
+## makefile
+Currently the makefile is made for windows, I might make a linux version later.
+
 # License: MIT

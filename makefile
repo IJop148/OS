@@ -1,29 +1,43 @@
+C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
+HEADERS = $(wildcard kernel/*.h drivers/*.h)
+
+OBJ = ${C_SOURCES:.c=.o}
+
 all:
-	make build/kernel_entry.o
-	make build/kernel.o
-	make build/kernel.bin
-	make build/boot_sect.bin
 	make os-image
 
+display:
+	echo ${C_SOURCES}
+	echo '-------------------'
+	echo ${HEADERS}
+
+
 clean:
-	del /s build\*.bin
-	del /s build\*.o
-	del /s build\*.elf
-	del /s build\*.map
-	del /s build\*.img
+	del /s *.bin
+	del /s *.o
+	del /s *.elf
 
-os-image: build/boot_sect.bin build/kernel.bin
-	copy /b build\boot_sect.bin+build\kernel.bin os-image
+os-image: boot_sect.bin kernel.bin
+	cd build
+	type $^ > build/$@
 
-build/boot_sect.bin: assembly/boot_sect.asm
+boot_sect.bin: assembly/boot_sect.asm
 	nasm $< -f bin -o $@
 
-build/kernel.bin: build/kernel_entry.o build/kernel.o
-	ld -m i386pe -o build/kernel.elf -Ttext 0x1000 $^
-	objcopy -O binary build/kernel.elf $@
+kernel.bin: assembly/kernel_entry.o ${OBJ}
+	echo $(OBJ)
+	ld -v -e _start -o kernel.elf -Ttext 0x1000 $^
+	objcopy -O binary kernel.elf $@
 
-build/kernel_entry.o: assembly/kernel.asm
+# Assemble the kernel_entry.
+%.o: %.asm
 	nasm $< -f elf -o $@
 
-build/kernel.o: c/kernel.c
-	gcc -ffreestanding -c $< -o $@
+%.bin: %.asm
+	nasm $< -f bin -o $@
+
+# Generic rule for compiling C code to an object file
+%.o: %.c ${HEADERS}
+	echo "--------------------------"
+	echo ${HEADERS}
+	gcc -ffreestanding -c $< -o $@ -Ikernel -Idrivers

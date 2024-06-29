@@ -126,3 +126,33 @@ void print_char(char character, int col, int row, char attribute_byte) {
     // Update the cursor position on the screen device.
     set_cursor(offset);
 }
+
+// Function to print a string to the screen
+void print_string(char *string) {
+    // Loop through each character of the string and print it
+    int i = 0;
+    while (string[i] != 0) {
+        print_char(string[i++], i, 0, WHITE_ON_BLACK);
+    }
+}
+
+// Function to print an hex values to the screen
+void print_hex(unsigned int n) {
+    char hex[16];
+    int i = 0;
+    while (n > 0) {
+        int rem = n % 16;
+        if (rem < 10) {
+            hex[i] = rem + '0';
+        } else {
+            hex[i] = rem - 10 + 'A';
+        }
+        n /= 16;
+        i++;
+    }
+    i--;
+    while (i >= 0) {
+        print_char(hex[i], -1, -1, WHITE_ON_BLACK);
+        i--;
+    }
+}

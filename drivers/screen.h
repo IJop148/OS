@@ -18,5 +18,7 @@
     void clear_screen();
     void set_cursor(int offset);
     void print_char(char character, int col, int row, char attribute_byte);
+    void print_string(char *string, int col, int row, char attribute_byte);
+    void print_hex(unsigned int n);
 
 #endif // SCREEN_H

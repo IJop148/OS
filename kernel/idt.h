@@ -1,16 +1,5 @@
 #include "low_level.h"
-
-#if !defined(uint32_t)
-#define uint32_t unsigned int
-#endif
-
-#if !defined(uint8_t)
-#define uint8_t unsigned char
-#endif
-
-#if !defined(uint16_t)
-#define uint16_t unsigned short
-#endif
+#include "shortcuts.h"
 
 // IDT entry structure
 struct idt_entry_struct {

@@ -126,3 +126,64 @@ void print_char(char character, int col, int row, char attribute_byte) {
     // Update the cursor position on the screen device.
     set_cursor(offset);
 }
+
+
+// Function to print a string to the screen
+void print_string(char *string, int start_col, int start_row, char attribute_byte) {
+    // Loop through each character of the string and print it
+    int i = 0;
+    int row = start_row;
+    int col = start_col;
+    while (string[i] != 0) {
+        if(string[i] == '\n') {
+            col = 0;
+            row++;
+            i++;
+            continue;
+        }
+        print_char(string[i], col, row, attribute_byte);
+        col = col + 1 < MAX_COLS ? col + 1 : 0;
+        row = col == 0 ? row + 1 : row;
+        i++;
+    }
+}
+
+// Function to print an hex values to the screen
+void print_hex(unsigned int n) {
+    char hex[16];
+    int i = 0;
+    while (n > 0) {
+        int rem = n % 16;
+        if (rem < 10) {
+            hex[i] = rem + '0';
+        } else {
+            hex[i] = rem - 10 + 'A';
+        }
+        n /= 16;
+        i++;
+    }
+    i--;
+    while (i >= 0) {
+        print_char(hex[i], -1, -1, WHITE_ON_BLACK);
+        i--;
+    }
+}
+
+void print_int(int n) {
+    char str[16];
+    int i = 0;
+    if (n < 0) {
+        print_char('-', -1, -1, WHITE_ON_BLACK);
+        n = -n;
+    }
+    while (n > 0) {
+        str[i] = n % 10 + '0';
+        n /= 10;
+        i++;
+    }
+    i--;
+    while (i >= 0) {
+        print_char(str[i], -1, -1, WHITE_ON_BLACK);
+        i--;
+    }
+}

@@ -1,7 +1,11 @@
 C_SOURCES = $(wildcard kernel/*.c drivers/*.c)
 HEADERS = $(wildcard kernel/*.h drivers/*.h)
 
+ASM_SOURCES = $(wildcard kernel/*.asm drivers/*.asm)
+
 OBJ = ${C_SOURCES:.c=.o}
+
+ASM_OBJ = ${ASM_SOURCES:.asm=.o}
 
 all:
 	make os-image
@@ -24,13 +28,13 @@ os-image: boot_sect.bin kernel.bin
 boot_sect.bin: assembly/boot_sect.asm
 	nasm $< -f bin -o $@
 
-kernel.bin: assembly/kernel_entry.o ${OBJ}
+kernel.bin: assembly/kernel_entry.o ${OBJ} ${ASM_OBJ}
 	echo $(OBJ)
 	ld -v -e _start -o kernel.elf -Ttext 0x1000 $^
 	objcopy -O binary kernel.elf $@
 
 # Assemble the kernel_entry.
-%.o: %.asm
+%.o: %.asm ${ASM_SOURCES}
 	nasm $< -f elf -o $@
 
 %.bin: %.asm
@@ -38,6 +42,4 @@ kernel.bin: assembly/kernel_entry.o ${OBJ}
 
 # Generic rule for compiling C code to an object file
 %.o: %.c ${HEADERS}
-	echo "--------------------------"
-	echo ${HEADERS}
 	gcc -ffreestanding -c $< -o $@ -Ikernel -Idrivers

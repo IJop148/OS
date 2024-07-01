@@ -28,8 +28,7 @@ os-image: boot_sect.bin kernel.bin
 boot_sect.bin: assembly/boot_sect.asm
 	nasm $< -f bin -o $@
 
-kernel.bin: assembly/kernel_entry.o ${OBJ} ${ASM_OBJ}
-	echo $(OBJ)
+kernel.bin: assembly/kernel_entry.o ${ASM_OBJ} ${OBJ}
 	ld -v -e _start -o kernel.elf -Ttext 0x1000 $^
 	objcopy -O binary kernel.elf $@
 

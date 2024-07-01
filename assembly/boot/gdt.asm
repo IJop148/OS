@@ -19,10 +19,11 @@ gdt_start:
         db 0b11001111       ; Data segment flags and limit (upper 4 bits)
         db 0x0              ; Data segment base (upper 8 bits)
 
-gdt_end:
 gdt_descriptor:
     dw gdt_end - gdt_start - 1   ; Size of the GDT (in bytes)
     dd gdt_start                 ; Address of the GDT
 
 CODE_SEG equ gdt_code - gdt_start   ; Offset of the code segment in the GDT
 DATA_SEG equ gdt_data - gdt_start   ; Offset of the data segment in the GDT
+
+gdt_end:

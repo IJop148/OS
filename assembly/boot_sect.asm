@@ -67,4 +67,4 @@ MSG_LOAD_KERNEL db "Loading kernel into memory.", 0
 times 510 - ($ - $$) db 0
 
 ; Add the boot signature
-dw 0xaa55
+dw 0xaa55 

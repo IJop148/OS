@@ -23,7 +23,7 @@ clean:
 
 os-image: boot_sect.bin kernel.bin
 	cd build
-	type $^ > build/$@
+	for %%f in ($^) do type %%f >> os-image
 
 boot_sect.bin: assembly/boot_sect.asm
 	nasm $< -f bin -o $@
